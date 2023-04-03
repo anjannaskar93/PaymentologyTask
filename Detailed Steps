@@ -1,0 +1,57 @@
+
+Here are the high-level steps we can follow:
+
+Create a new VPC with multiple subnets
+Create an Internet Gateway and attach it to the VPC
+Create a NAT Gateway and attach it to the public subnet
+Create security groups for the EC2 instance and the Application Load Balancer (ALB)
+Launch an EC2 instance in the private subnet with the web application installed
+Create an Application Load Balancer (ALB) and target the EC2 instance
+Set up monitoring for the VPC, NAT Gateway, EC2 instance, and ALB using CloudWatch
+We'll use Terraform to automate the deployment of this infrastructure.
+
+Step 1: Create a new VPC with multiple subnets
+
+Here's the Terraform code to create a new VPC with three subnets (one public and two private). This will create a new VPC with the CIDR block 10.0.0.0/16 and three subnets:
+
+Step 2: Create an Internet Gateway and attach it to the VPC
+
+We need to create an Internet Gateway and attach it to the VPC so that resources in the VPC can communicate with the internet. Here's the Terraform code to create an Internet Gateway and attach it to the VPC:
+
+Step 3: Create a NAT Gateway and attach it to the public subnet
+
+We need to create a NAT Gateway and attach it to the public subnet so that resources in the private subnet can communicate with the internet. Here's the Terraform code to create a NAT Gateway and attach it to the public subnet.
+
+Step 4: Create security groups for the EC2 instance and the ALB
+
+We need to create security groups for the EC2 instance and the ALB. Here's the Terraform code to create security groups.
+
+5. The code creates an EC2 instance with the Amazon Machine Image (AMI) ID specified in the "ami" parameter. We also specify the instance type, key pair name, security group, and subnet ID. We set "associate_public_ip_address" to false so that the instance is not publicly accessible.
+
+In the "user_data" field, we use a Bash script to update the instance and install the Apache HTTP server. We also create a simple HTML file in the web server's document root directory, which will be served when we access the server's public IP address.
+
+6. Create an Application Load Balancer resource in the "alb_main.tf" file.
+The code creates an Application Load Balancer with the name "web-lb" and sets the load balancer type to "application". We also specify the security group for the ALB and the public subnets where the ALB will be deployed.
+
+7. Steps to set up monitoring for the VPC, NAT Gateway, EC2 instance, and ALB using CloudWatch:
+7.a Create an IAM role for CloudWatch to access the resources:
+    Create a new file named "cloudwatch_role.tf" and add the following code to create an IAM role for CloudWatch.
+7.b This code creates an IAM role with the name "cloudwatch_role" and attaches the necessary trust policies to   enable CloudWatch to access EC2 instances, API Gateway, Lambda, and Elastic Load Balancing.
+    Create a policy for CloudWatch to access the resources:
+    Create a new file named "cloudwatch_policy.tf" and add the following code to create a policy for CloudWatch to access the resources:
+7.c This code creates a policy that allows CloudWatch to access the necessary resources to monitor the VPC, NAT  Gateway, EC2 instance, and ALB.
+
+    Attach the policy to the IAM role:
+    Add the following code to "cloudwatch_role.tf" to attach the policy to the IAM role:
+7.d Enable detailed monitoring for the EC2 instance and NAT Gateway:
+    Add the following code to "main.tf" to enable detailed monitoring for the EC2 instance and NAT Gateway:
+
+This code registers the EC2 instance with the target group by executing an AWS CLI command in the local machine.
+
+Initialize and apply the Terraform configuration:
+Run the following command in your terminal to initialize the configuration and download the required provider plugins:
+terraform init
+terraform apply
+terraform apply
+
+
